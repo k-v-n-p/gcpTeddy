@@ -13,22 +13,19 @@ const getProgress = () => {
         mode: 'no-cors'
     }
     const Status=null;
-
-    const userAction = async () => {
-        console.log("inside user action");
-
-        await fetch('https://us-east1-healthcarepci.cloudfunctions.net/StatusCheck',options)
+    const StatusUrl = 'https://us-east1-healthcarepci.cloudfunctions.net/StatusCheck';
+    const userAction = async (url,fun) => {
+        const response=await fetch(StatusUrl)
         .then(response => response.json())
-        .then(json => console.log(json))
+        .then(json => fun(json))
     }
     //if sucessful response reset the button and enable inputs
-    const addStatus =  ()=> {
-        userAction();
-        //console.log(data);
-        document.getElementById("statusArea").innerHTML += "sd";
+    const addStatus =  (data)=> {
+        console.log("inside fun",data);
+        document.getElementById("statusArea").innerHTML += JSON.stringify(data);
         
     }
-    addStatus();
+    userAction(StatusUrl,addStatus);
 
 }
 
