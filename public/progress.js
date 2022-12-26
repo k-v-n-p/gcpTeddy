@@ -22,8 +22,8 @@ const getProgress = () => {
     //if sucessful response reset the button and enable inputs
     const addStatus =  (data)=> {
         console.log("inside fun",data);
-        document.getElementById("statusArea").innerHTML += JSON.stringify(data);
-        
+        document.getElementById("statusArea").innerHTML = JSON.stringify(data);
+        document.getElementById("status-heading").style.display = "inline";
     }
     userAction(StatusUrl,addStatus);
 
