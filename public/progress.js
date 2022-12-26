@@ -1,10 +1,25 @@
+
 const showProgress = () => {
     document.getElementById("progress").style.display = "block";
     document.getElementById("value").disabled = true;
     document.getElementById("submit-button").innerText = "Fetch Status";
     document.getElementById("submit-button").setAttribute( "onClick", "getProgress()" );
 }
+const hudson = (data) => {
+    console.log("hudson fkajdn")
+    const status = JSON.stringify(data);
+    blurt(
+        'Task Successfully completed',
+        'Status: ' + status,
+        'success'
+    );
+    document.getElementById("progress").style.display = "none";
+    document.getElementById("value").disabled = false;
+    document.getElementById("submit-button").innerText = "Submit";
+    document.getElementById("submit-button").setAttribute( "onClick", "showProgress()" );
 
+    document.getElementById("statusArea").innerHTML += JSON.stringify(data.status);
+}
 const getProgress = () => {
     console.log("inside get progress");
     const options = {
@@ -21,9 +36,11 @@ const getProgress = () => {
     }
     //if sucessful response reset the button and enable inputs
     const addStatus =  (data)=> {
-        console.log("inside fun",data);
         document.getElementById("statusArea").innerHTML = JSON.stringify(data);
         document.getElementById("status-heading").style.display = "inline";
+        if(JSON.stringify(data.status)=="\"completed\""){
+            hudson(data);
+        }
     }
     userAction(StatusUrl,addStatus);
 
