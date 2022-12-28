@@ -1,0 +1,61 @@
+body {
+  /*background-image: url(./imgs/rm218batch5-mynt-24.jpg);*/
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  overflow: hidden;
+}
+
+.column {
+  float: left;
+  width: 50%;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+#h3id {
+  color: black;
+  padding-bottom: 10px;
+}
+
+#progress {
+  display: none;
+}
+
+#statusArea {
+  display: inline;
+}
+
+#status-heading {
+  display: none;
+}
+
+#loadbarid {
+  float: left;
+  width: 60%;
+}
+
+#procbtn {
+  display: table-cell;
+  padding-left: 20px;
+  width: 10%;
+}
+
+#dropd {
+  display: table-cell;
+  width: 80%;
+  padding-right: 10px;
+}
+
+#tot {
+  display: table;
+}
+
+#whole {
+  margin-left: 5%;
+  margin: 10%;
+}
