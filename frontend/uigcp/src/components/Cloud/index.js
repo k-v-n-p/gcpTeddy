@@ -1,6 +1,7 @@
 import React from "react";
 import "./index.css";
 import "../bootstrap/bootstrap.min.css";
+import {showProgress} from "./progress";
 const Cloud = () => {
   return (
     <React.Fragment>
@@ -29,7 +30,7 @@ const Cloud = () => {
                       className="btn btn-danger"
                       type="button"
                       id="submit-button"
-                      onclick="showProgress()"
+                      onClick={showProgress}
                     >
                       Submit
                     </button>
