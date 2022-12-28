@@ -1,9 +1,10 @@
 import React from "react";
-
+import "./index.css";
+import "../bootstrap/bootstrap.min.css";
 const Cloud = () => {
   return (
     <React.Fragment>
-      <div id="whole" style="margin-left: 5%; margin:10%;">
+      <div id="whole">
         <div className="row">
           <div className="column1">
             <div className="container">
@@ -12,6 +13,11 @@ const Cloud = () => {
                 <div id="tot">
                   <div id="dropd">
                     <select className="form-select" id="value">
+                      <option value="centene_pipe">Centene</option>
+                      <option value="Cigna">Cigna</option>
+                      <option value="uhc_pipe">UHC</option>
+                      <option value="humana_pipe">Humana</option>
+                      <option value="Anthem">Anthem</option>
                       <option value="composer_trigger_response_dag">
                         sample
                       </option>
