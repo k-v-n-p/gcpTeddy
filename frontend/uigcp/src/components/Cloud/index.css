@@ -1,33 +1,130 @@
-body {
-  /*background-image: url(./imgs/rm218batch5-mynt-24.jpg);*/
-  background-repeat: no-repeat;
+/* body { */
+/*background-image: url(./imgs/rm218batch5-mynt-24.jpg);*/
+/* background-repeat: no-repeat;
   background-size: 100% 100%;
   overflow: hidden;
-}
+} */
 
-.column1 {
+/* .column1 {
   float: left;
-  flex-basis: 60%;
-  /* displa; */
-  /* background-color: aquamarine; */
-}
-.column2 {
+  flex-basis: 60%; */
+/* displa; */
+/* background-color: aquamarine; */
+/* } */
+/* .column2 {
   float: left;
   flex-basis: 40%;
   padding-top: 10px;
   padding-bottom: 200px;
   /* background-color: antiquewhite; */
+/* } */
+
+/* Clear floats after the columns */
+/* .row:after {
+  content: "";
+  display: table;
+  clear: both;
+} */
+
+/* #h3id {
+  color: black;
+  padding-bottom: 10px;
+} */
+
+/* #progress {
+  display: none;
+} */
+
+/* #statusArea {
+  display: inline;
+} */
+
+/* #status-heading {
+  display: none;
+  margin-top: 100px;
+  background-color: aqua;
+} */
+
+/* #loadbarid {
+  margin-top: 10px;
+  float: left;
+  width: 60%;
+  margin-bottom: 10;
+} */
+
+/* #procbtn {
+  display: table-cell;
+  padding-left: 70px;
+  padding-right: 10px;
+  width: 100%; */
+/* background-color: blue; */
+/* } */
+/* 
+#dropd {
+  display: table-cell;
+  width: 60%; */
+/* padding-right: 10px; */
+/* background-color: aquamarine; */
+/* } */
+/* 
+#tot {
+  display: table;
+  margin-left: 10%;
+  margin-top: 5%;
+} */
+
+/* #whole {
+  margin-left: 10%;
+  margin: 10%;
+  margin-top: 15%; */
+/* background-color: blueviolet; */
+/* } */
+
+body {
+  /*background-image: url(./imgs/rm218batch5-mynt-24.jpg);*/
+
+  background-repeat: no-repeat;
+
+  background-size: 100% 100%;
+
+  overflow: hidden;
+}
+
+.column1 {
+  float: left;
+
+  flex-basis: 60%;
+
+  /* displa; */
+
+  /* background-color: aquamarine; */
+}
+
+.column2 {
+  float: left;
+
+  flex-basis: 40%;
+
+  padding-top: 10px;
+
+  padding-bottom: 200px;
+
+  /* background-color: antiquewhite; */
 }
 
 /* Clear floats after the columns */
+
 .row:after {
   content: "";
+
   display: table;
+
   clear: both;
 }
 
 #h3id {
   color: black;
+
   padding-bottom: 10px;
 }
 
@@ -41,45 +138,101 @@ body {
 
 #status-heading {
   display: none;
+
   margin-top: 100px;
+
   background-color: aqua;
 }
 
 #loadbarid {
   margin-top: 10px;
+
   float: left;
+
   width: 60%;
+
   margin-bottom: 10;
 }
 
 #procbtn {
   display: table-cell;
-  padding-left: 70px;
-  padding-right: 10px;
-  width: 100%;
-  /* background-color: blue; */
-}
 
-#progress{
-  
+  padding-left: 70px;
+
+  padding-right: 10px;
+
+  width: 100%;
+
+  column-gap: 40px;
+
+  /* background-color: blue; */
 }
 
 #dropd {
   display: table-cell;
+
   width: 60%;
+
   /* padding-right: 10px; */
+
   /* background-color: aquamarine; */
 }
 
 #tot {
   display: table;
-  margin-left: 10%;
-  margin-top: 5%;
+
+  margin-left: 5%;
+  /* margin-bottom: %; */
+  margin-top: 1%;
+  background-color: aliceblue;
 }
 
 #whole {
   margin-left: 10%;
+  padding-bottom: 40%;
   margin: 10%;
-  margin-top: 15%;
+  margin-top: 8%;
+
   /* background-color: blueviolet; */
+}
+
+.navbar-brand {
+  border-radius: 30px;
+}
+
+.navbarTogglerDemo02 {
+  text-align: center;
+
+  color: aliceblue;
+
+  list-style: none;
+}
+
+.nav-item,
+md {
+  color: aliceblue;
+}
+
+.tab {
+  width: 150px;
+
+  text-align: center;
+
+  padding: 35px;
+}
+
+#lastrun {
+  width: 30%;
+}
+
+#payer {
+  width: 20%;
+}
+
+#indexf {
+  width: 20%;
+}
+
+#ratef {
+  width: 20%;
 }
