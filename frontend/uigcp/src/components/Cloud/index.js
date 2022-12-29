@@ -3,12 +3,12 @@ import "./index.css";
 import "../bootstrap/bootstrap.min.css";
 import "./loadingbar.css";
 const Cloud = () => {
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState(localStorage.getItem("inputValue"));
   const [check,setCheck] = useState(true);
     const showProgress = () => {
       console.log("showing progress...");
       document.getElementById("progress").style.display = "block";
-      document.getElementById("value").disabled = true;
+      //document.getElementById("value").disabled = true;
       document.getElementById("submit-button").innerText = "Check Status";
       //document.getElementById("submit-button").setAttribute( "onClick", getProgress );
       getProgress();
@@ -125,8 +125,8 @@ const Cloud = () => {
           hudson(data);
         }
         else if (JSON.stringify(data.status) == "\"running\""){ 
-          alert("Task Already running")
-          document.getElementById("statusArea").innerHTML = JSON.stringify(data);
+          //alert("Task Already running")
+          document.getElementById("statusArea").innerHTML = Number(data.processedfiles);
           document.getElementById("status-heading").style.display = "inline";
         }
           // document.getElementById("statusArea").innerHTML = JSON.stringify(data);
@@ -137,11 +137,13 @@ const Cloud = () => {
       }
       userAction(addStatus);
     }
-
+    
+    
     useEffect(() => {
       setValue(localStorage.getItem("inputValue"));
       console.log("Check: ", check);
       console.log("local: ", localStorage.getItem("inputValue"));
+      console.log("value: ", value);
       if(localStorage.getItem("inputValue") === "" || !localStorage.getItem("inputValue")){
         console.log("fresh session")
       }
@@ -181,7 +183,7 @@ const Cloud = () => {
                       id="submit-button"
                       onClick={true ? showProgress : checkStatus}
                     >
-                      Submit
+                      Process
                     </button>
                   </div>
                 </div>
@@ -190,12 +192,12 @@ const Cloud = () => {
           </div>
           <div className="column2">
             <div className="container">
-              <div id="progress">
+              <div id="progress"><br /><br />
                 <h6>Please wait...</h6>
                 <div className="loader" id="loadbarid">
                   <div className="loaderBar"></div>
-                </div>
-                <h6 id="status-heading">Status: </h6>
+                </div><br />
+                <h6 id="status-heading">No. of files processed: </h6>
                 <span id="statusArea"></span>
               </div>
             </div>
