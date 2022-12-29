@@ -4,6 +4,7 @@ import "../bootstrap/bootstrap.min.css";
 import "./loadingbar.css";
 const Cloud = () => {
   const [value, setValue] = useState(localStorage.getItem("inputValue"));
+  const [username, setUsername] = useState(localStorage.getItem("user"));
   const [check,setCheck] = useState(true);
     const showProgress = () => {
       console.log("showing progress...");
@@ -12,7 +13,7 @@ const Cloud = () => {
       document.getElementById("submit-button").innerText = "Check Status";
       //document.getElementById("submit-button").setAttribute( "onClick", getProgress );
       getProgress();
-      setCheck(false)
+      setCheck(false);
     }
 
     const handleChange = (e) => {
@@ -32,6 +33,7 @@ const Cloud = () => {
       document.getElementById("progress").style.display = "none";
       document.getElementById("value").disabled = false;
       document.getElementById("submit-button").innerText = "Submit";
+      
       //document.getElementById("submit-button").setAttribute( "onClick", showProgress );
       //document.getElementById("statusArea").innerHTML += JSON.stringify(data.status);
     }
@@ -55,37 +57,41 @@ const Cloud = () => {
       const response=await fetch(resetUrl,options)
       .then(response => console.log(response))
       .catch((err) => console.log(err));
-      setCheck(false)
+      
   }
 
     const checkStatus = () => {
       console.log("inside check status");console.log("Check: ", check);
-      
+
       const userActionq = async (fun) => {
-        const StatusUrl = 'https://us-east1-healthcarepci.cloudfunctions.net/StatusCheck?message='+value;
+        const StatusUrlCheck = 'https://us-east1-healthcarepci.cloudfunctions.net/StatusCheck?message='+value;
         console.log("value: " + value)
-        const options = {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          mode: "no-cors"
-        }
-        const response=await fetch(StatusUrl,options)
+        const response=await fetch(StatusUrlCheck)
         .then(response => response.json())
         .then(json => fun(json))
         .catch((err) => console.log(err));
     }
 
       const addStatusq =  (data)=> {
+
         console.log("data: " + JSON.stringify(data));
-        if(JSON.stringify(data.status)=="\"initial\"")
+        if(JSON.stringify(data.status)=="\"initial\""){
           document.getElementById("statusArea").innerHTML = "Task successfully added to queue";
+        }
+        else if(JSON.stringify(data.status)=="\"idle\""){
+          alert("Task not started yet. Click submit to start.");
+          hudson(data);
+          setCheck(true)
+        }
         else if (JSON.stringify(data.status) == "\"completed\""){ 
+            
           alert("Task Completed successfully")
           changeToIdle();
           hudson(data);
+          setCheck(true)
         }
         else if (JSON.stringify(data.status) == "\"running\""){ 
-          document.getElementById("statusArea").innerHTML = JSON.stringify(data);
+          document.getElementById("statusArea").innerHTML = Number(data.processedfiles);
           document.getElementById("status-heading").style.display = "inline";
         }
       }
@@ -93,21 +99,14 @@ const Cloud = () => {
       userActionq(addStatusq);
     }
     const getProgress = () => {
-      
+      setCheck(false)
       console.log("inside get progress");console.log("Check: ", check);
       const value = document.querySelector("#value").value;
 
       const userAction = async (fun) => {
           const StatusUrl = 'https://us-east1-healthcarepci.cloudfunctions.net/test?message='+value;
           console.log("value: " + value)
-          const data = {
-            "message": value
-          }
-          const options = {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            mode: "no-cors"
-          }
+         
           const response=await fetch(StatusUrl)
           .then(response => response.json())
           .then(json => fun(json))
@@ -125,7 +124,7 @@ const Cloud = () => {
           hudson(data);
         }
         else if (JSON.stringify(data.status) == "\"running\""){ 
-          //alert("Task Already running")
+          alert("Task Already running")
           document.getElementById("statusArea").innerHTML = Number(data.processedfiles);
           document.getElementById("status-heading").style.display = "inline";
         }
@@ -140,16 +139,27 @@ const Cloud = () => {
     
     
     useEffect(() => {
-      setValue(localStorage.getItem("inputValue"));
       console.log("Check: ", check);
-      console.log("local: ", localStorage.getItem("inputValue"));
+      console.log("local value: ", localStorage.getItem("inputValue"));
       console.log("value: ", value);
+      console.log("local user: ",  localStorage.getItem("user"));
+      console.log("username: ", username);
       if(localStorage.getItem("inputValue") === "" || !localStorage.getItem("inputValue")){
         console.log("fresh session")
       }
       else{
         console.log("continue session")
-        showProgress()
+        checkStatus()
+      }
+      if(localStorage.getItem("user") === "" || !localStorage.getItem("user")){
+        console.log("new user")
+        let person = prompt("Please enter your name", "pranav");
+        
+        setUsername(person);
+        localStorage.setItem("user", person);
+      }
+      else{
+        console.log("existing user: "+  username )
       }
         
     }, []);
@@ -160,6 +170,7 @@ const Cloud = () => {
         <div className="row">
           <div className="column1">
             <div className="container">
+            Hey { username || "User"}
               <form id="form">
                 <h3 id="h3id">Select DAG File:</h3>
                 <div id="tot">
@@ -181,7 +192,7 @@ const Cloud = () => {
                       className="btn btn-danger"
                       type="button"
                       id="submit-button"
-                      onClick={true ? showProgress : checkStatus}
+                      onClick={check ? showProgress : checkStatus}
                     >
                       Process
                     </button>
@@ -209,3 +220,9 @@ const Cloud = () => {
 };
 
 export default Cloud;
+
+// const options = {
+//   method: "POST",
+//   headers: { "Content-Type": "application/json" },
+//   mode: "no-cors"
+// }
