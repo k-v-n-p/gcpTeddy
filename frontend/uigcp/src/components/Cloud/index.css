@@ -5,9 +5,18 @@ body {
   overflow: hidden;
 }
 
-.column {
+.column1 {
   float: left;
-  width: 50%;
+  flex-basis: 60%;
+  /* displa; */
+  /* background-color: aquamarine; */
+}
+.column2 {
+  float: left;
+  flex-basis: 40%;
+  padding-top: 10px;
+  padding-bottom: 200px;
+  /* background-color: antiquewhite; */
 }
 
 /* Clear floats after the columns */
@@ -32,30 +41,45 @@ body {
 
 #status-heading {
   display: none;
+  margin-top: 100px;
+  background-color: aqua;
 }
 
 #loadbarid {
+  margin-top: 10px;
   float: left;
   width: 60%;
+  margin-bottom: 10;
 }
 
 #procbtn {
   display: table-cell;
-  padding-left: 20px;
-  width: 10%;
+  padding-left: 70px;
+  padding-right: 10px;
+  width: 100%;
+  /* background-color: blue; */
+}
+
+#progress{
+  
 }
 
 #dropd {
   display: table-cell;
-  width: 8%;
-  padding-right: 10px;
+  width: 60%;
+  /* padding-right: 10px; */
+  /* background-color: aquamarine; */
 }
 
 #tot {
   display: table;
+  margin-left: 10%;
+  margin-top: 5%;
 }
 
 #whole {
-  margin-left: 5%;
+  margin-left: 10%;
   margin: 10%;
+  margin-top: 15%;
+  /* background-color: blueviolet; */
 }
