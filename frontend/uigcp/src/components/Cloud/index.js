@@ -17,6 +17,12 @@ const Cloud = () => {
     setCheck(false);
   };
 
+  // const imgUrls={
+  //   completed: "/completed.", 
+  //   idle: "/idle.webp",
+  //   running: ""
+  // }
+
   const handleChange = (e) => {
     setValue(e.target.value);
     localStorage.setItem("inputValue", e.target.value);
@@ -47,10 +53,10 @@ const Cloud = () => {
     return [h, m, s].join(":");
   }
 
-  const changeToIdle = async () => {
+  const changeToIdle = async (name) => {
+    console.log("changing to idle for ", name);
     const resetUrl =
-      "https://us-central1-healthcarepci.cloudfunctions.net/refresh?message=" +
-      value;
+      "https://us-central1-healthcarepci.cloudfunctions.net/refresh?message=" +name;
     console.log("In changing to idle:");
     const options = {
       method: "POST",
@@ -61,6 +67,39 @@ const Cloud = () => {
       .then((response) => console.log(response))
       .catch((err) => console.log(err));
   };
+
+  const selectIcon = (x,stat,name) => {
+   console.log("status in icon:",x,stat);
+   const table = document.querySelector("#my-refresh-table");
+   if(stat === "initial")
+    table.rows[Number(x)].cells[4].querySelector("img").src ="/initial.png";
+   else if(stat === "running")
+    table.rows[Number(x)].cells[4].querySelector("img").src ="/process.gif";
+    else if(stat === "idle")
+     table.rows[Number(x)].cells[4].querySelector("img").src ="/idle.webp";
+     else if(stat === "completed"){
+      table.rows[Number(x)].cells[4].querySelector("img").src ="/completed.svg";
+      changeToIdle(name)
+     }
+    else 
+    table.rows[Number(x)].cells[4].querySelector("img").src ="/favicon.ico";
+    // console.log("status in icon:",stat);
+    // let img = "/favicon.ico";
+    // if(stat === "initial") {
+    //   console.log("initial icon");
+    //   img= "/intial.png";
+    // }
+    // else if (stat === "running") {
+    //   img= "/process.gif";
+    // }
+    // else if (stat === "idle"){
+    //   img= "/idle.webp"
+    // }
+    // else if (stat === "completed") {
+    //   img= "/completed.webp";
+    // }
+    // return img;
+  }
 
   const refreshTable = () => {
     console.log("inside refresh table");
@@ -86,44 +125,43 @@ const Cloud = () => {
         table.rows[1].cells[1].innerHTML = data.data[0].processedfiles;
         table.rows[1].cells[2].innerHTML = data.data[0].rate_files;
         table.rows[1].cells[3].innerHTML = data.data[0].last_run;
-        table.rows[1].cells[4].querySelector("img").src = data.data[0].status;
+        selectIcon(1,data.data[0].stat,data.data[0].dag);
+        console.log("at table:", String(selectIcon(1,data.data[0].stat,data.data[0].dag)))
 
         table.rows[2].cells[0].innerHTML = data.data[1].payer;
         table.rows[2].cells[1].innerHTML = data.data[1].processedfiles;
         table.rows[2].cells[2].innerHTML = data.data[1].rate_files;
         table.rows[2].cells[3].innerHTML = data.data[1].last_run;
-        table.rows[2].cells[4].querySelector("img").src = data.data[1].status;
+        selectIcon(2,data.data[1].stat,data.data[1].dag);
 
         table.rows[3].cells[0].innerHTML = data.data[2].payer;
         table.rows[3].cells[1].innerHTML = data.data[2].processedfiles;
         table.rows[3].cells[2].innerHTML = data.data[2].rate_files;
         table.rows[3].cells[3].innerHTML = data.data[2].last_run;
-        table.rows[3].cells[4].querySelector("img").src = data.data[2].status;
+        selectIcon(3, data.data[2].stat,data.data[2].dag);
 
         table.rows[4].cells[0].innerHTML = data.data[3].payer;
         table.rows[4].cells[1].innerHTML = data.data[3].processedfiles;
         table.rows[4].cells[2].innerHTML = data.data[3].rate_files;
         table.rows[4].cells[3].innerHTML = data.data[3].last_run;
-        table.rows[4].cells[4].querySelector("img").src = data.data[3].status;
+        selectIcon(4, data.data[3].stat,data.data[3].dag);
 
         table.rows[5].cells[0].innerHTML = data.data[6].payer;
         table.rows[5].cells[1].innerHTML = data.data[6].processedfiles;
         table.rows[5].cells[2].innerHTML = data.data[6].rate_files;
         table.rows[5].cells[3].innerHTML = data.data[6].last_run;
-        table.rows[5].cells[4].querySelector("img").src = data.data[6].status;
+        selectIcon(5, data.data[6].stat,data.data[6].dag);
 
         table.rows[6].cells[0].innerHTML = data.data[5].payer;
         table.rows[6].cells[1].innerHTML = data.data[5].processedfiles;
         table.rows[6].cells[2].innerHTML = data.data[5].rate_files;
         table.rows[6].cells[3].innerHTML = data.data[5].last_run;
-        table.rows[6].cells[4].querySelector("img").src = data.data[5].status;
+        selectIcon(6, data.data[5].stat,data.data[5].dag);
 
         if (
           JSON.stringify(data.status) ==
           "https://uxwing.com/wp-content/themes/uxwing/download/checkmark-cross/confirm-icon.svg"
         ) {
-          //("successfully completed!, do you want to change to idle")
-
           changeToIdle();
         }
       })
@@ -382,6 +420,7 @@ const Cloud = () => {
                         </button>
                       </th>
                     </table>
+                    
                   </div>
                 </div>
               </form>
@@ -472,6 +511,7 @@ const Cloud = () => {
                         <img src="" width="30" height="25"></img>
                       </td>
                     </tr>
+                    
                   </tbody>
                 </table>
               </div>
@@ -494,13 +534,14 @@ const Cloud = () => {
                 <br />
 
                 <h6 id="status-heading">No. of files processed: </h6>
-
+                
                 <span id="statusArea"></span>
               </div>
             </div>
           </div>
         </div>
       </div>
+      <img src="/process.gif" alt="image2" />
     </React.Fragment>
   );
 };
