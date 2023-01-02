@@ -47,7 +47,7 @@ const Cloud = () => {
     return [h, m, s].join(":");
   }
 
-  const changeToIdle = async (fun) => {
+  const changeToIdle = async () => {
     const resetUrl =
       "https://us-central1-healthcarepci.cloudfunctions.net/refresh?message=" +
       value;
@@ -117,6 +117,15 @@ const Cloud = () => {
         table.rows[6].cells[2].innerHTML = data.data[5].rate_files;
         table.rows[6].cells[3].innerHTML = data.data[5].last_run;
         table.rows[6].cells[4].querySelector("img").src = data.data[5].status;
+
+        if (
+          JSON.stringify(data.status) ==
+          "https://uxwing.com/wp-content/themes/uxwing/download/checkmark-cross/confirm-icon.svg"
+        ) {
+          //("successfully completed!, do you want to change to idle")
+
+          changeToIdle();
+        }
       })
       .catch((error) => {
         console.error(error);
